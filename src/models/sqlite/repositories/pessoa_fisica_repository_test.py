@@ -47,6 +47,7 @@ class MockConnectionNoResult:
         self.session = UnifiedAlchemyMagicMock()
         # Quando a query for executada o efeito secundário é levantar o erro
         self.session.query.side_effect = self.__raise_no_result_found
+        self.session.add.side_effect = self.__raise_no_result_found
 
     def __raise_no_result_found(self, *args, **kwargs):
         raise NoResultFound("No result found")
@@ -54,6 +55,30 @@ class MockConnectionNoResult:
     def __enter__(self): return self
 
     def __exit__(self, exc_type, exc_val, exc_tb): pass
+
+def test_insert_pessoa_fisica():
+    renda_mensal = 15000
+    idade = 65
+    nome_completo = "Raphael"
+    celular = "85999999999"
+    email = "raphael@gmail.com"
+    categoria = "Pessoa Física ABC"
+    saldo = 100
+
+    mock_connection = MockConnection()
+    repo = PessoaFisicaRepository(mock_connection)
+    repo.insert_pessoa_fisica(renda_mensal=renda_mensal,
+                              idade=idade,
+                              nome_completo=nome_completo,
+                              celular=celular,
+                              email=email,
+                              categoria=categoria,
+                              saldo=saldo)
+
+    mock_connection.session.add.assert_called()
+    called_pessoa_fisica = mock_connection.session.add.call_args[0][0]
+    assert isinstance(called_pessoa_fisica, PessoaFisicaTable)
+    assert called_pessoa_fisica.nome_completo == "Raphael"
 
 # Teste unitário
 def test_list_pessoas_fisicas():
@@ -105,4 +130,29 @@ def test_delete_pessoa_fisica_error():
         repo.delete_pessoa_fisica(1)
 
     mock_connection.session.rollback.assert_called_once()
-    
+
+def test_insert_pessoa_fisica_error():
+    renda_mensal = 15000
+    idade = 65
+    nome_completo = "Raphael"
+    celular = "85999999999"
+    email = "raphael@gmail.com"
+    categoria = "Pessoa Física ABC"
+    saldo = 100
+
+    mock_connection = MockConnectionNoResult()
+    repo = PessoaFisicaRepository(mock_connection)
+
+    with pytest.raises(Exception, match="No result found"):
+        repo.insert_pessoa_fisica(
+                                renda_mensal=renda_mensal,
+                                idade=idade,
+                                nome_completo=nome_completo,
+                                celular=celular,
+                                email=email,
+                                categoria=categoria,
+                                saldo=saldo
+                                )
+
+    mock_connection.session.add.assert_called()
+    mock_connection.session.rollback.assert_called()
