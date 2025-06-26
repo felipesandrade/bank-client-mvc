@@ -33,7 +33,7 @@ class PessoaFisicaRepository(PessoaFisicaRepositoryInterface):
                 database.session.rollback()
                 raise exception
 
-    def list_pessoas_fisicas(self) -> List[PessoaFisicaTable]:
+    def list_pessoa_fisica(self) -> List[PessoaFisicaTable]:
         with self.__db_connection as database:
             try:
                 pessoas_fisicas = (database.session

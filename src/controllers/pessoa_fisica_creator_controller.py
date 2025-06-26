@@ -44,7 +44,7 @@ class PessoaFisicaCreatorController:
                                     email: str,
                                     categoria: str,
                                     saldo: float) -> None:
-        
+
         self.__pessoa_fisica_repository.insert_pessoa_fisica(renda_mensal,
                                                              idade,
                                                              nome_completo,
