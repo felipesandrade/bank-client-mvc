@@ -1,8 +1,9 @@
 from typing import List # Python 3.8
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.pessoa_fisica import PessoaFisicaTable
+from src.models.sqlite.interfaces.pessoa_fisica_repository import PessoaFisicaRepositoryInterface
 
-class PessoaFisicaRepository:
+class PessoaFisicaRepository(PessoaFisicaRepositoryInterface):
     def __init__(self, db_connection) -> None:
         self.__db_connection = db_connection
 
@@ -43,7 +44,7 @@ class PessoaFisicaRepository:
             except NoResultFound:
                 return []
 
-    def delete_pessoa_fisica(self, pessoa_fisica_id: int) -> int:
+    def delete_pessoa_fisica(self, pessoa_fisica_id: int) -> None:
         with self.__db_connection as database:
             try:
                 result = (database.session

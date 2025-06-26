@@ -1,8 +1,9 @@
 from typing import List
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.pessoa_juridca import PessoaJuridicaTable
+from src.models.sqlite.interfaces.pessoa_juridica_repository import PessoaJuridicaRepositoryInterface
 
-class PessoaJurdicaRepository:
+class PessoaJurdicaRepository(PessoaJuridicaRepositoryInterface):
     def __init__(self, db_connection) -> None:
         self.__db_connection = db_connection
 
