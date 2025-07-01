@@ -81,7 +81,7 @@ def test_insert_pessoa_juridica():
 def test_list_pessoa_juridica():
     mock_connection = MockConnection()
     repo = PessoaJurdicaRepository(mock_connection)
-    response = repo.list_pessoas_juridicas()
+    response = repo.list_pessoa_juridica()
 
     mock_connection.session.query.assert_called_once_with(PessoaJuridicaTable)
     mock_connection.session.all.assert_called_once()
@@ -101,7 +101,7 @@ def test_delete_pessoa_jurifica():
 def test_list_pessoa_juridica_no_result():
     mock_connection = MockConnectionNoResult()
     repo = PessoaJurdicaRepository(mock_connection)
-    response = repo.list_pessoas_juridicas()
+    response = repo.list_pessoa_juridica()
 
     mock_connection.session.query.assert_called_once_with(PessoaJuridicaTable)
     mock_connection.session.all.assert_not_called()

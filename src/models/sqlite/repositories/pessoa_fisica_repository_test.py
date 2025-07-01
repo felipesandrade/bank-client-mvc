@@ -84,7 +84,7 @@ def test_insert_pessoa_fisica():
 def test_list_pessoas_fisicas():
     mock_connection = MockConnection()
     repo = PessoaFisicaRepository(mock_connection)
-    response = repo.list_pessoas_fisicas()
+    response = repo.list_pessoa_fisica()
 
     # Veririca se a query foi chamada 1 vez com a tabela PessoaFisciaTable
     mock_connection.session.query.assert_called_once_with(PessoaFisicaTable)
@@ -110,7 +110,7 @@ def test_delete_pessoa_fisica():
 def test_list_pessoas_fisicas_no_result():
     mock_connection = MockConnectionNoResult()
     repo = PessoaFisicaRepository(mock_connection)
-    response = repo.list_pessoas_fisicas()
+    response = repo.list_pessoa_fisica()
 
     # Veririca se a query foi chamada 1 vez com a tabela PessoaFisciaTable
     mock_connection.session.query.assert_called_once_with(PessoaFisicaTable)
