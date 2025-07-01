@@ -15,7 +15,7 @@ class PessoaJuridicaRepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    def list_pessoas_juridicas(self) -> List:
+    def list_pessoa_juridica(self) -> List:
         pass
 
     @abstractmethod

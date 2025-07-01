@@ -33,7 +33,7 @@ class PessoaJurdicaRepository(PessoaJuridicaRepositoryInterface):
                 database.session.rollback()
                 raise exception
 
-    def list_pessoas_juridicas(self) -> List:
+    def list_pessoa_juridica(self) -> List:
         with self.__db_connection as database:
             try:
                 pessoas_juridicas = (database.session
